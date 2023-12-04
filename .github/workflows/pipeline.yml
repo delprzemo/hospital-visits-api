@@ -40,6 +40,11 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+    
+      - name: Decode connection string
+        id: decode
+        run: echo "::set-output name=connectionString::$(echo "${{ secrets.HOSPITAL_DB_CONNECTION_STRING }}" | base64 --decode)"
+
       - name: Set Connection String
         uses: azure/appservice-settings@v1
         with:
@@ -48,7 +53,7 @@ jobs:
             [
               {
                 "name": "ConnectionStrings:HospitalDb",
-                "value": "${{ secrets.HOSPITAL_DB_CONNECTION_STRING }}",
+                "value": "${{ steps.decode.outputs.connectionString }}",
                 "slotSetting": false
               }
             ]
