@@ -1,4 +1,5 @@
 param webAppName string
+param connectionString string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2023-01-01' = {
   name: '${webAppName}Plan'
@@ -18,7 +19,12 @@ resource webApp 'Microsoft.Web/sites@2020-12-01' = {
     siteConfig: {
       netFrameworkVersion: 'v6.0'
       scmType: 'None'
-      appSettings: []
+      appSettings: [
+        {
+          name: 'ConnectionStrings:HospitalDb'
+          value: connectionString
+        }
+      ]
     }
   }
 }
