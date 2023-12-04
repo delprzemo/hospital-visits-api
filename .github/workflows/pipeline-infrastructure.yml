@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEB_APP_NAME: 'hospitalvisitexerciseapi'
+  AZURE_WEB_APP_NAME: 'hospitalvisitsexerciseapi'
   RESOURCE_GROUP_NAME: 'Hospital'
 
 
@@ -21,13 +21,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+
       - name: Deploy Bicep template
         run: |
           az deployment group create \
             --name ExampleDeployment \
             --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
             --template-file ./devops/webapp.bicep \
-            --parameters webAppName=${{ env.AZURE_WEB_APP_NAME }}
+            --parameters webAppName=${{ env.AZURE_WEB_APP_NAME }} connectionString=${{secrets.HOSPITAL_DB_CONNECTION_STRING}}
 
       - name: Azure logout
         run: az logout
