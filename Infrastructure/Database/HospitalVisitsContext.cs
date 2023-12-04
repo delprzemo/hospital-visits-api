@@ -1,5 +1,6 @@
 ﻿using Domain;
 using System.Data.Entity;
+using System.Diagnostics;
 
 namespace Infrastructure.Database
 {
@@ -7,6 +8,7 @@ namespace Infrastructure.Database
     {
         public HospitalVisitsContext(string connectionString) : base(connectionString)
         {
+            Debug.WriteLine(connectionString); // Logs the connection string to the debug output
         }
 
         public DbSet<Specialization> Specializations { get; set; }
