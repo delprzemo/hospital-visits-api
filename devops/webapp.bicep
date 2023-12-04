@@ -29,4 +29,3 @@ resource webApp 'Microsoft.Web/sites@2020-12-01' = {
     }
   }
 }
-
