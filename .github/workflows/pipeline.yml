@@ -35,6 +35,10 @@ jobs:
       - name: Publish
         run: dotnet publish ./HospitalVisits/HospitalVisits.csproj --no-build --output ./publish
 
+      - name: Apply EF Migrations
+        run: dotnet ef database update
+        working-directory: ./Infrastructure
+
       - name: Set up Azure CLI
         uses: azure/login@v1
         with:
