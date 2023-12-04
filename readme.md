@@ -6,6 +6,9 @@ Hospital Visits is a .NET 6.0 based web application that manages hospital visits
 
 You can check out the demo API at [this url](https://hospitalvisitsexerciseapi.azurewebsites.net/)
 
+Sample call
+`curl --location 'https://hospitalvisitsexerciseapi.azurewebsites.net/hospital' \`
+
 ## Architecture
 
 The project follows the principles of Clean Architecture, which is divided into several layers:
