@@ -1,0 +1,31 @@
+name: Deploy Hospital Azure Infrastructure
+
+on:
+  workflow_dispatch:
+
+env:
+  AZURE_WEB_APP_NAME: 'hospitalvisitsexerciseapi'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Bicep template
+        run: |
+          az deployment sub create \
+            --name ExampleDeployment \
+            --location westeurope \
+            --template-file ./devops/webapp.bicep \
+            --parameters webAppName=${{ env.AZURE_WEB_APP_NAME }}
+
+      - name: Azure logout
+        run: az logout
