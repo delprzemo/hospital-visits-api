@@ -22,7 +22,7 @@ namespace HospitalVisits.Extensions
 
             using (var context = new HospitalVisitsContext(connectionString))
             {
-                context.Database.Initialize(force: true);
+                //context.Database.Initialize(force: true);
             }
         }
     }
