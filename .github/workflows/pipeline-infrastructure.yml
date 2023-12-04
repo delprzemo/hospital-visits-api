@@ -6,6 +6,7 @@ on:
 env:
   AZURE_WEB_APP_NAME: 'hospitalvisitsexerciseapi'
   RESOURCE_GROUP_NAME: 'Hospital'
+  CONNECTION_STRING: "${{ secrets.HOSPITAL_DB_CONNECTION_STRING }}"
 
 
 jobs:
@@ -21,26 +22,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Set Connection String
-        uses: azure/appservice-settings@v1
-        with:
-          app-name: ${{ env.AZURE_WEB_APP_NAME }}
-          app-settings-json: |
-            [
-              {
-                "name": "ConnectionStrings:HospitalDb",
-                "value": "${{ secrets.HOSPITAL_DB_CONNECTION_STRING }}",
-                "slotSetting": false
-              }
-            ]
-
       - name: Deploy Bicep template
         run: |
           az deployment group create \
             --name ExampleDeployment \
             --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
             --template-file ./devops/webapp.bicep \
-            --parameters webAppName=${{ env.AZURE_WEB_APP_NAME }}
+            --parameters webAppName=${{ env.AZURE_WEB_APP_NAME }} \
+            --parameters connectionString=${{ env.CONNECTION_STRING }}
 
       - name: Azure logout
         run: az logout
