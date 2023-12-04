@@ -1,7 +1,14 @@
 name: Deploy Hospital API
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
+
+env:
+  AZURE_WEB_APP_NAME: 'hospitalvisitsexerciseapi'
+  RESOURCE_GROUP_NAME: 'Hospital'
 
 jobs:
   deploy:
@@ -11,10 +18,35 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-build
+
+      - name: Publish
+        run: dotnet publish ./HospitalVisits/HospitalVisits.csproj -c Release -o ${{env.DOTNET_ROOT}}/hospitalapi
+
       - name: Set up Azure CLI
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEB_APP_NAME }}
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ${{env.DOTNET_ROOT}}/hospitalapi
 
       - name: Azure logout
         run: az logout

@@ -1,8 +1,9 @@
 param webAppName string
+param location string = 'westeurope' 
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2023-01-01' = {
   name: '${webAppName}Plan'
-  location: 'westeurope'
+  location: location
   sku: {
     name: 'F1'
     tier: 'Free'
@@ -11,7 +12,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2023-01-01' = {
 
 resource webApp 'Microsoft.Web/sites@2020-12-01' = {
   name: webAppName
-  location: 'westeurope'
+  location: location
   properties: {
     serverFarmId: appServicePlan.id
     httpsOnly: true
@@ -22,4 +23,3 @@ resource webApp 'Microsoft.Web/sites@2020-12-01' = {
     }
   }
 }
-
