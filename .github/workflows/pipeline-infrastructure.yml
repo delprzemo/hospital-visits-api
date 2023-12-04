@@ -5,6 +5,8 @@ on:
 
 env:
   AZURE_WEB_APP_NAME: 'hospitalvisitsexerciseapi'
+  RESOURCE_GROUP_NAME: 'Hospital'
+
 
 jobs:
   deploy:
@@ -21,9 +23,9 @@ jobs:
 
       - name: Deploy Bicep template
         run: |
-          az deployment sub create \
+          az deployment group create \
             --name ExampleDeployment \
-            --location westeurope \
+            --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
             --template-file ./devops/webapp.bicep \
             --parameters webAppName=${{ env.AZURE_WEB_APP_NAME }}
 
