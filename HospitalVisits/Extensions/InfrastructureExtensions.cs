@@ -9,7 +9,8 @@ namespace HospitalVisits.Extensions
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped(provider => new HospitalVisitsContext(configuration.GetConnectionString("HospitalDb")));
+            var connectionString = configuration.GetConnectionString("HospitalDb") ?? configuration["HospitalDb"];
+            services.AddScoped(provider => new HospitalVisitsContext(connectionString));
             services.AddScoped<IHospitalRepository, HospitalRepository>();
 
             return services;
