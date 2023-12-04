@@ -1,7 +1,4 @@
 using HospitalVisits.Extensions;
-using Infrastructure.Database;
-using MediatR;
-using System.Data.Entity;
 
 namespace HospitalVisits
 {
