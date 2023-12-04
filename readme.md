@@ -24,7 +24,8 @@ CQRS pattern has beed implemented in project
 1. Clone the repository.
 2. Install .NET 6.0 SDK.
 3. Run `dotnet restore` to restore the packages.
-4. Run `dotnet run` to start the application.
+4. Add SQL Server Connection string in `appsettings.json`
+5. Run `dotnet run` to start the application.
 
 ## Pipelines
 
