@@ -27,7 +27,7 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build /main:HospitalVisits --no-restore
+        run: dotnet build ./HospitalVisits/HospitalVisits.csproj --no-restore
 
       - name: Test
         run: dotnet test --no-build
