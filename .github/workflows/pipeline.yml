@@ -50,7 +50,7 @@ jobs:
 
       - name: Set connection string
         run: |
-          az webapp config connection-string set \
+            az webapp config connection-string set \
             --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
             --name ${{ env.AZURE_WEB_APP_NAME }} \
             --connection-string-type SQLAzure \
