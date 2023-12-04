@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEB_APP_NAME: 'hospitalvisitexerciseapi'
+  AZURE_WEB_APP_NAME: 'hospitalvisitsexerciseapi'
   RESOURCE_GROUP_NAME: 'Hospital'
 
 jobs:
