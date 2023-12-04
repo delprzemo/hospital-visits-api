@@ -33,3 +33,10 @@ There are two main pipelines in this project:
 1. **Infrastructure Deployment Pipeline**: This pipeline is responsible for deploying the infrastructure required for the application. It deploys a WebApp with an app plan using Azure Bicep templates. The pipeline is defined in the `.github/workflows/pipeline-infrastructure.yml` file. It can be triggered manually
 
 2. **API Deployment Pipeline**: This pipeline is responsible for deploying the API to the WebApp. It is defined in the `.github/workflows/pipeline.yml` file. It triggers after every PR merge
+
+## Tests
+
+The project uses XUnit and NSubstitute as test package
+In this project, tests have been created only for the `GetPatientVisitsQuery`` query. However, it is recommended to create tests for other business logic in solution.
+It is also well recommended to consider "integration" api tests, but with [mocked external services](https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-5.0#inject-mock-services-1)
+Such a tests can test our api logic end to end in fully isolated and runtime built environment.
