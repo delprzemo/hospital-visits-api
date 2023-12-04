@@ -40,12 +40,18 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: App Settings Variable Substitution
-        uses: microsoft/variable-substitution@v1
+      - name: Set Connection String
+        uses: azure/appservice-settings@v1
         with:
-          files: './HospitalVisits/appsettings.json'
-        env:
-          ConnectionStrings.HospitalDb: ${{ secrets.HOSPITAL_DB_CONNECTION_STRING }}
+          app-name: ${{ env.AZURE_WEB_APP_NAME }}
+          app-settings-json: |
+            [
+              {
+                "name": "ConnectionStrings:HospitalDb",
+                "value": "${{ secrets.HOSPITAL_DB_CONNECTION_STRING }}",
+                "slotSetting": false
+              }
+            ]
 
       - name: Deploy to Azure
         uses: azure/webapps-deploy@v2
